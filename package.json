@@ -1,28 +1,29 @@
 {
-  "name": "gulp-consolidate-render",
-  "version": "1.2.6",
-  "description": "A library for compiling and rendering via Consolidate.js",
+  "name": "gulp-consolidate-render-safe",
+  "version": "0.9.0",
+  "description": "A more compatabile version of gulp-consolidate-render",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexsomeoddpilot/gulp-consolidate-render.git"
+    "url": "https://github.com/krispy1298/gulp-consolidate-render-safe.git"
   },
   "keywords": [
     "gulp",
     "consolidate",
     "render"
   ],
-  "author": "Alex Robertson <alex@someoddpilot.com>",
+  "author": "Kamil Kecki <kamil@someoddpilot.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alexsomeoddpilot/gulp-consolidate-render/issues"
+    "url": "https://github.com/krispy1298/gulp-consolidate-render-safe/issues"
   },
-  "homepage": "https://github.com/alexsomeoddpilot/gulp-consolidate-render",
+  "homepage": "https://github.com/krispy1298/gulp-consolidate-render-safe",
   "dependencies": {
     "consolidate-p": "^1.0.0",
+    "gulp-util": "^3.0.1",
     "lodash": "^3.9.1",
     "q": "^1.4.1",
     "through2": "^0.6.5"
