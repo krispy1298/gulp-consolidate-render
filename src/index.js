@@ -1,9 +1,9 @@
-var consolidate = require("consolidate-p");
-var _ = require("lodash");
-var path = require("path");
-var through = require("through2");
-var fs = require("fs");
-var Promise = require("q").Promise;
+var consolidate = require('consolidate-p');
+var _ = require('lodash');
+var path = require('path');
+var through = require('through2');
+var fs = require('fs');
+var Q = require('q');
 var gutil = require('gulp-util');
 
 function basicCompileData(sources) {
@@ -11,10 +11,10 @@ function basicCompileData(sources) {
 }
 
 function templateFileExists(templatePath) {
-  return new Promise(function promisifyExists(resolve, reject) {
+  return Q.Promise(function promisifyExists(resolve, reject) {
     fs.exists(templatePath, function onExists(exists) {
       if (!exists) {
-        return new gutil.PluginError('gulp-consolidate-render-safe', "Template does not exist at " + templatePath);
+        return gutil.log('Template does not exist at ' + templatePath);
       }
       resolve(true);
     });
@@ -23,8 +23,8 @@ function templateFileExists(templatePath) {
 
 function templates(options) {
   var compiledOptions = _.merge({
-    templateDir: "templates",
-    defaultTemplate: "post",
+    templateDir: 'templates',
+    defaultTemplate: 'post',
     extension: '.html'
   }, options);
 
@@ -33,36 +33,38 @@ function templates(options) {
   var compileData = compiledOptions.compileData || basicCompileData;
 
   if (!compiledOptions.engine) {
-    return new gutil.PluginError('gulp-consolidate-render-safe', "Missing required `engine` parameter");
+    gutil.log('Missing required `engine` parameter');
+    return callback();
   }
 
   return through.obj(function onData(file, enc, callback) {
-    if (!file.frontMatter) {
-      new gutil.PluginError('gulp-consolidate-render-safe', "Missing frontMatter");
-      return;
+    if (_.isEmpty(file.frontMatter)) {
+      return callback();
     }
 
     if (!file.frontMatter.template) {
-      new gutil.PluginError('gulp-consolidate-render-safe', path + 'missing template setting');
-      return;
+      return callback();
     }
 
     var templateName = file.frontMatter.template || compiledOptions.defaultTemplate;
 
     var templatePath = path.join(
-      "./",
+      './',
       compiledOptions.templateDir,
       templateName + compiledOptions.extension
     );
+
+    var frontMatter = file.frontMatter;
+    var contents = file.contents;
 
     templateFileExists(templatePath)
       .then(function () {
         var data = compileData([
           {},
           globals,
-          file.frontMatter || {},
+          frontMatter || {},
           {
-            contents: file.contents.toString()
+            contents: contents.toString()
           },
           file
         ]);
@@ -70,13 +72,15 @@ function templates(options) {
         return consolidate[compiledOptions.engine](templatePath, data);
       })
       .then(function (html) {
-        file.contents = new Buffer(html, "utf-8");
+        file.contents = Buffer(html, 'utf-8');
 
-        return file;
+        return callback(null, file);
       })
       .catch(function (err) {
-        return new gutil.PluginError('gulp-consolidate-render-safe', err);
+        gutil.log(err);
+        return callback(null, file);
       });
+
   });
 }
 
