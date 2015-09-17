@@ -1,7 +1,7 @@
 {
   "name": "gulp-consolidate-render-safe",
-  "version": "0.9.0",
-  "description": "A more compatabile version of gulp-consolidate-render",
+  "version": "1.0.0",
+  "description": "A more compatabile, but less stable, version of gulp-consolidate-render",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha"
