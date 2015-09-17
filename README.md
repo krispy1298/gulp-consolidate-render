@@ -1,6 +1,8 @@
-# gulp-consolidate-render
+# gulp-consolidate-render-safe
 
-[![Build Status](https://travis-ci.org/SomeoddpilotInc/gulp-consolidate-render.svg?branch=master)](https://travis-ci.org/SomeoddpilotInc/gulp-consolidate-render)
+## A more compatabile, but less stable, version of [gulp-consolidate-render](https://github.com/SomeoddpilotInc/gulp-consolidate-render)
+
+[![Build Status](https://travis-ci.org/krispy1298/gulp-consolidate-render-safe.svg?branch=master)](https://travis-ci.org/krispy1298/gulp-consolidate-render-safe)
 
 A library for compiling and rendering via Consolidate.js
 
