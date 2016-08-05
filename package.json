@@ -1,6 +1,6 @@
 {
   "name": "gulp-consolidate-render-safe",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A more compatabile, but less stable, version of gulp-consolidate-render",
   "main": "src/index.js",
   "scripts": {
